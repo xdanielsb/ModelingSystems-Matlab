@@ -1,11 +1,11 @@
-%Ejercicio numero 2
+%Initialize the workspace
 clc
 clear all
 close all
-% inicializar parametros
+% Initialize the parameters
 R =10; %10 ohmnios
 C=10e-6; %10 micro faradios
 v0=.1; % .1 voltio
-%datos
-T =R*C
-q0 = v0*C;
+%Equations
+T =R*C %time constant tao
+q0 = v0*C; %Initial load 
