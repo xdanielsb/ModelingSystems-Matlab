@@ -22,7 +22,7 @@ function varargout = window(varargin)
 
 % Edit the above text to modify the response to help window
 
-% Last Modified by GUIDE v2.5 24-Oct-2016 21:32:29
+% Last Modified by GUIDE v2.5 24-Oct-2016 22:51:18
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -81,14 +81,14 @@ function btnplot_Callback(hObject, eventdata, handles)
  pole1 = str2double(get(handles.pole1,'String')); %edit1 being Tag of ur edit box
  pole2 = str2double(get(handles.pole2,'String'));
  gain =  str2double(get(handles.gain,'String'));
+ tss =  str2double(get(handles.tss,'String'));
+ mp =  str2double(get(handles.mp,'String'));
  if isempty(pole1)
     fprintf('User please enter the value first\n');
-    
-
  else
      fprintf('The pole 1 is : %s', pole1)
      fpid = @pid
-     fpid(pole1, pole2 , gain, 1, 0.05)
+     fpid(pole1, pole2 , gain, tss, mp)
    % Write code for computation you want to do 
  end
 
@@ -211,6 +211,7 @@ function f = pid(pole1, pole2 , gain, tss, Mp)
 
     %Create another figure
     figure(2)
+   
     step(Gd)
     grid on 
     hold on
@@ -227,3 +228,48 @@ function f = pid(pole1, pole2 , gain, tss, Mp)
     Glc = feedback(series(Gs, Cs), 1)
     step(Glc)
 
+
+
+function tss_Callback(hObject, eventdata, handles)
+% hObject    handle to tss (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of tss as text
+%        str2double(get(hObject,'String')) returns contents of tss as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function tss_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to tss (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function mp_Callback(hObject, eventdata, handles)
+% hObject    handle to mp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of mp as text
+%        str2double(get(hObject,'String')) returns contents of mp as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function mp_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to mp (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
