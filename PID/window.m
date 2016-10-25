@@ -82,10 +82,13 @@ function btnplot_Callback(hObject, eventdata, handles)
  pole2 = str2double(get(handles.pole2,'String'));
  gain =  str2double(get(handles.gain,'String'));
  tss =  str2double(get(handles.tss,'String'));
- mp =  str2double(get(handles.mp,'String'));
- if isempty(pole1)
+ mp =  get(handles.mp,'String');
+ if isempty(mp)
     fprintf('User please enter the value first\n');
+    fpid = @pid
+     fpid(pole1, pole2 , gain, tss, -1)
  else
+     mp =  str2double(get(handles.mp,'String'));
      fprintf('The pole 1 is : %s', pole1)
      fpid = @pid
      fpid(pole1, pole2 , gain, tss, mp)
@@ -191,12 +194,16 @@ function f = pid(pole1, pole2 , gain, tss, Mp)
 
 
     Kd = 1;
-    Zd = abs(log(Mp)) /  sqrt ( pi^2 + log(Mp)^2);
+    
+    if ~isequal(Mp, -1);
+        Zd = abs(log(Mp)) /  sqrt ( pi^2 + log(Mp)^2)
+    else
+        Zd = 1
+    end
     Wnd =  4 / (Zd*tss);
     numd = [Kd*(Wnd^2)];
     dend = [1 2*Zd*Wnd Wnd^2];
     Gd = tf(numd,dend)
-
     hold on
     step(Gd)
     
